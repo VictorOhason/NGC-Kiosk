@@ -17,3 +17,5 @@ class PageViewTests(TestCase):
 
                 self.assertEqual(response.status_code, 200)
                 self.assertTemplateUsed(response, f"pages/{page}.html")
+                if page == "welcome":
+                    self.assertContains(response, 'href="/static/pages/style.css"')

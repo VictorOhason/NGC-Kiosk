@@ -1,0 +1,36 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" class="welcome-page">
+  <head class="welcome-page__head">
+    <meta charset="utf-8" class="welcome-page__charset">
+    <meta name="viewport" content="width=device-width, initial-scale=1" class="welcome-page__viewport">
+    <title class="welcome-page__document-title">Newcastle Games Convention 2026</title>
+    <link rel="stylesheet" href="{% static 'pages/style.css' %}">
+  </head>
+  
+  <body class="welcome-page__body">
+    <header class="welcome-page__header">
+      <a class="welcome-page__logo-link" href="{% url 'pages:welcome' %}" aria-label="Newcastle Games Convention home">
+        LOGO
+      </a>
+    </header>
+
+    <main class="welcome-page__main">
+      <section class="welcome-page__intro" aria-labelledby="welcome-title">
+        <h1 class="welcome-page__heading" id="welcome-title">Newcastle Games Convention 2026</h1>
+        <p class="welcome-page__subtitle">Self-Service Check-In Kiosk</p>
+      </section>
+
+      <section class="welcome-page__start" aria-label="Begin check-in">
+        <a class="welcome-page__start-link" href="{% url 'pages:checkin' %}">
+          <span class="welcome-page__start-label">Press any key or touch to begin</span>
+          <span class="welcome-page__start-hint">Have your booking reference, surname, or email ready</span>
+        </a>
+      </section>
+    </main>
+
+    <footer class="welcome-page__footer">
+      <p class="welcome-page__assistance">Need assistance? Please speak to a member of convention staff nearby.</p>
+    </footer>
+  </body>
+</html>

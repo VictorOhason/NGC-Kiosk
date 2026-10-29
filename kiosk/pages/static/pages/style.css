@@ -1,0 +1,88 @@
+@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap");
+
+:root {
+  color-scheme: dark;
+
+  --color-background: #0b0f19;
+  --color-surface: #1e293b;
+  --color-border: #D1D5DB;
+  --color-accent: #6366f1;
+  --color-success: #10b981;
+  --color-error: #ee3e3e;
+  --color-text: #f8fafc;
+  --color-text-muted: #94a3b8;
+
+  --font-family: "Plus Jakarta Sans", system-ui, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", sans-serif;
+}
+
+body {
+  min-height: 100vh;
+  margin: 0;
+  background-color: var(--color-background);
+  color: var(--color-text);
+  font-family: var(--font-family);
+}
+
+.welcome-page__body{
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.welcome-page__logo-link{
+  text-decoration: none;
+  color: var(--color-text);
+  font-size: large;
+}
+
+.welcome-page__header{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+  width: 100%;
+  box-sizing: border-box;
+  min-height: 5rem;
+  padding: 0 1.5rem;
+}
+
+.welcome-page__main{
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding: 2rem;
+}
+
+.welcome-page__intro{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 0.75rem;
+  padding: 2rem;
+}
+
+.welcome-page__start{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background-color: var(--color-accent);
+  border: 1px solid var(--color-border);
+  border-radius: 0.75rem;
+  padding: 6rem;
+}
+
+.welcome-page__start-link{
+  text-decoration: none;
+  color: var(--color-text);
+  font-size: large;
+}
+
