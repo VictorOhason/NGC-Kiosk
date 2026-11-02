@@ -1,0 +1,35 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" class="confirmation-page">
+  <head class="confirmation-page__head">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="refresh" content="5;url={% url 'pages:welcome' %}">
+    <title>Check-In Successful | Newcastle Games Convention 2026</title>
+    <link rel="stylesheet" href="{% static 'pages/style.css' %}">
+  </head>
+  <body class="confirmation-page__body">
+    <main class="confirmation-page__main">
+      <section class="confirmation-page__message" aria-labelledby="confirmation-title" aria-live="polite">
+        <div class="confirmation-page__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" focusable="false">
+            <path d="m5 12 4 4L19 6"></path>
+          </svg>
+        </div>
+        <h1 class="confirmation-page__heading" id="confirmation-title">
+          Check-In <span class="confirmation-page__heading-success">Successful!</span>
+        </h1>
+        <p class="confirmation-page__description">
+          You are all set for your talks at NGC 2026.
+        </p>
+        <p class="confirmation-page__countdown">
+          Returning to the welcome screen automatically in 5 seconds...
+        </p>
+      </section>
+
+      <a class="confirmation-page__finish-link" href="{% url 'pages:welcome' %}">
+        Finish Now
+      </a>
+    </main>
+  </body>
+</html>

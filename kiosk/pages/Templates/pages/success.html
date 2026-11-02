@@ -1,0 +1,75 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" class="success-page">
+  <head class="success-page__head">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Check-In Details | Newcastle Games Convention 2026</title>
+    <link rel="stylesheet" href="{% static 'pages/style.css' %}">
+  </head>
+  <body class="success-page__body">
+    <header class="success-page__header">
+      <a class="success-page__brand" href="{% url 'pages:welcome' %}">
+        <span class="success-page__brand-mark" aria-hidden="true">N</span>
+        <span>[NGC 2026] Kiosk</span>
+      </a>
+      <a class="success-page__cancel-link" href="{% url 'pages:checkin' %}" data-kiosk-escape>
+        Cancel / Start Over
+      </a>
+    </header>
+
+    <main class="success-page__main">
+      <section class="success-page__attendee" aria-labelledby="attendee-heading">
+        <h1 class="success-page__heading" id="attendee-heading">
+          Welcome, <span class="success-page__attendee-name">Attendee Name</span>
+        </h1>
+        <p class="success-page__reference">Ref: #NGC-0000</p>
+      </section>
+
+      <section class="success-page__ticket" aria-label="Ticket details">
+        <span class="success-page__ticket-icon" aria-hidden="true">▤</span>
+        <div class="success-page__ticket-details">
+          <p class="success-page__ticket-label">Ticket Type</p>
+          <p class="success-page__ticket-type">VIP Convention Pass</p>
+        </div>
+      </section>
+
+      <section class="success-page__talks" aria-labelledby="talks-heading">
+        <h2 class="success-page__talks-heading" id="talks-heading">Your Booked Talks</h2>
+        <div class="success-page__table-scroll">
+          <table class="success-page__table">
+            <thead>
+              <tr>
+                <th scope="col">Time</th>
+                <th scope="col">Talk Title</th>
+                <th scope="col">Location</th>
+                <th scope="col">Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td data-label="Time">10:00 AM</td>
+                <td data-label="Talk Title">Indie Game Dev in 2026</td>
+                <td data-label="Location">Main Stage</td>
+                <td data-label="Status"><span class="success-page__status success-page__status--checked-in">Checked In</span></td>
+              </tr>
+              <tr>
+                <td data-label="Time">02:30 PM</td>
+                <td data-label="Talk Title">Unreal Engine 5 Deep Dive</td>
+                <td data-label="Location">Room B12</td>
+                <td data-label="Status"><span class="success-page__status success-page__status--check-in">Check In</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <div class="success-page__actions">
+        <a class="success-page__confirm-button" href="{% url 'pages:confirmation' %}" data-kiosk-enter>
+          Confirm Check-In <span aria-hidden="true">(Enter)</span>
+        </a>
+      </div>
+    </main>
+    <script src="{% static 'pages/kiosk.js' %}" defer></script>
+  </body>
+</html>

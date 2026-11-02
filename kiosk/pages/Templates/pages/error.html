@@ -1,0 +1,45 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" class="error-page">
+  <head class="error-page__head">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Booking Not Found | Newcastle Games Convention 2026</title>
+    <link rel="stylesheet" href="{% static 'pages/style.css' %}">
+  </head>
+  <body class="error-page__body">
+    <header class="error-page__header">
+      <a class="error-page__brand" href="{% url 'pages:welcome' %}">
+        [NGC 2026] Kiosk
+      </a>
+    </header>
+
+    <main class="error-page__main">
+      <section class="error-page__message" aria-labelledby="error-title">
+        <h1 class="error-page__heading" id="error-title">Booking Not Found</h1>
+        <p class="error-page__description">
+          We couldn't find a registration matching your search details.
+          <br>
+          Please check for typos or ask a convention staff member.
+        </p>
+      </section>
+
+      <section class="error-page__actions" aria-label="What to do next">
+        <a class="error-page__retry-link" href="{% url 'pages:checkin' %}" data-kiosk-escape>
+          Try Again (Esc)
+        </a>
+        <p class="error-page__staff-help">
+          Please ask a convention staff member for help.
+        </p>
+      </section>
+    </main>
+
+    <footer class="error-page__footer">
+      <p class="error-page__assistance">
+        <span class="error-page__assistance-icon" aria-hidden="true">!</span>
+        Need assistance? Please speak to a member of convention staff nearby.
+      </p>
+    </footer>
+    <script src="{% static 'pages/kiosk.js' %}" defer></script>
+  </body>
+</html>

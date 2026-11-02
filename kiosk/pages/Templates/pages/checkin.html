@@ -1,0 +1,80 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" class="checkin-page">
+  <head class="checkin-page__head">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Find Your Booking | Newcastle Games Convention 2026</title>
+    <link rel="stylesheet" href="{% static 'pages/style.css' %}">
+    <script src="{% static 'pages/checkin.js' %}" defer></script>
+  </head>
+  <body class="checkin-page__body">
+    <header class="checkin-page__header">
+      <a class="checkin-page__brand" href="{% url 'pages:welcome' %}">
+        [NGC 2026] Newcastle Games Convention Kiosk
+      </a>
+      <a class="checkin-page__home-link" href="{% url 'pages:welcome' %}">
+        <span aria-hidden="true">⌫</span>
+        Back to Home
+      </a>
+    </header>
+
+    <main class="checkin-page__main">
+      <section class="checkin-page__intro" aria-labelledby="checkin-title">
+        <h1 class="checkin-page__heading" id="checkin-title">Find Your Booking</h1>
+        <p class="checkin-page__subtitle">
+          Enter your 6-digit reference, surname, or email address:
+        </p>
+      </section>
+
+      <section class="checkin-page__search-panel" aria-label="Search for a booking">
+        <form class="checkin-page__form" method="post" action="{% url 'pages:checkin' %}" autocomplete="off">
+          {% csrf_token %}
+          <label class="checkin-page__input-label" for="booking-query">
+            Booking reference, surname, or email address
+          </label>
+          <input
+            class="checkin-page__input"
+            id="booking-query"
+            name="query"
+            type="search"
+            placeholder="e.g. NGC-4921 or smith@example.com"
+            autocomplete="off"
+            maxlength="254"
+            required
+          >
+          <div class="checkin-page__actions">
+            <button class="checkin-page__clear-button" type="reset">Clear Input</button>
+            <button class="checkin-page__search-button" type="submit">
+              Search Booking (Enter)
+              <span aria-hidden="true">→</span>
+            </button>
+          </div>
+          <p
+            class="checkin-page__status{% if search_error or lookup_unavailable %} checkin-page__status--error{% endif %}"
+            id="lookup-status"
+            role="status"
+            aria-live="polite"
+            {% if not search_error and not lookup_unavailable %}hidden{% endif %}
+          >
+            {% if search_error %}
+              {{ search_error }}
+            {% elif lookup_unavailable %}
+              Booking lookup is not connected yet. Please ask a convention staff member for help.
+            {% endif %}
+          </p>
+          <p class="checkin-page__tip">
+            Tip: Use your physical keyboard to type and press [ Enter ] to look up.
+          </p>
+        </form>
+      </section>
+    </main>
+
+    <footer class="checkin-page__footer">
+      <p class="checkin-page__assistance">
+        <span class="checkin-page__assistance-icon" aria-hidden="true">!</span>
+        Need assistance? Please speak to a member of convention staff nearby.
+      </p>
+    </footer>
+  </body>
+</html>

@@ -9,5 +9,6 @@ urlpatterns = [
     path('booking/', views.booking, name='booking'),
     path('checkin/', views.checkin, name='checkin'),
     path('success/', views.success, name='success'),
+    path('confirmation/', views.confirmation, name='confirmation'),
     path('error/', views.error, name='error'),
 ]
