@@ -23,17 +23,19 @@ This document describes the kiosk pages and behavior currently implemented in th
 - Rejects empty and overlong search values.
 - Shows a searching status while the form is submitting.
 - The search panel focuses the input when clicked outside its controls.
-- **Dashboard lookup is not connected.** A valid submission displays a clear “lookup is not connected yet” message rather than returning mock search results or claiming no booking exists.
+- Looks up confirmed bookings in the local Django database using an exact booking reference, surname, or email match.
+- Shows a booking review for a single match, or lets the visitor select among multiple matches.
+- Shows the booking-not-found page when no confirmed booking matches.
 - Pressing Escape clears the form and returns focus to the search field.
-- Search terms are not echoed into the response, and the page is marked as non-cacheable.
+- Search terms are not placed in URLs or repopulated into the form; the page is marked as non-cacheable.
 
 ### Booking review — `/success/`
 
 - Shows the review layout for attendee details, ticket type, booked talks, locations, and statuses.
-- Uses placeholder attendee and booking data for the design; it is not populated from a real booking.
+- Loads attendee and booking details from the local Django database.
 - “Cancel / Start Over” returns to the booking search page. Escape activates this action.
-- “Confirm Check-In” opens the final confirmation page. Enter activates it when no other element has focus.
-- This page does **not** save a check-in to a database.
+- “Confirm Check-In” submits a CSRF-protected request that records the booking's check-in time before displaying confirmation. Enter activates it when no other element has focus.
+- Already checked-in bookings are identified and cannot be checked in a second time.
 - The talks table has a compact layout for small screens.
 
 ### Final confirmation — `/confirmation/`
@@ -41,14 +43,14 @@ This document describes the kiosk pages and behavior currently implemented in th
 - Shows a checkmark, successful check-in message, and “Finish Now” link.
 - “Finish Now” returns to the welcome page.
 - The browser automatically returns to the welcome page after five seconds.
-- This page currently represents the visual flow only; it is not proof of a persisted check-in.
+- It is only available after a successful database check-in.
 
 ### Booking not found — `/error/`
 
 - Shows the booking-not-found message and a retry link back to search.
 - Escape activates the retry link.
 - Provides guidance to ask a nearby convention staff member; no help call or contact integration is configured.
-- The page is not automatically selected by booking search yet.
+- Booking search sends unmatched confirmed bookings to this page.
 
 ## Shared behavior and presentation
 
@@ -56,12 +58,18 @@ This document describes the kiosk pages and behavior currently implemented in th
 - Key kiosk pages use responsive layouts, visible keyboard focus styles, and larger touch targets.
 - Search, review, confirmation, and error pages are marked non-cacheable to reduce the chance of personal information persisting in browser caches.
 - A back/forward-cache return to review or error redirects to the welcome page.
-- Django page tests cover the routes, key UI content, search validation and unavailable state, CSRF protection, and cache headers.
+- Django tests cover search results, selection, check-in persistence, duplicate check-in prevention, CSRF protection, and cache headers.
 
 ## Not implemented yet
 
 - Connection to the school dashboard or another approved booking-data source.
-- Searching for a booking and distinguishing no match, an empty database, and a dashboard outage.
-- Displaying the selected attendee’s real details and booked talks.
-- Persisting check-in before showing the final confirmation.
+- Importing or synchronizing bookings from an external data source.
 - A real staff-help contact method.
+
+## Local Django database
+
+- Django's SQLite database has models for attendees, bookings, talks, and booking-to-talk reservations.
+- Bookings store a unique reference, ticket type, booking status, and overall check-in time.
+- Talk reservations store their own booking/check-in/cancellation status and check-in time.
+- These tables are editable in Django admin and are used by the kiosk search and check-in flow.
+- Booking data must be entered in admin or imported before visitors can find their bookings.

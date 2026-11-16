@@ -21,16 +21,16 @@
     <main class="success-page__main">
       <section class="success-page__attendee" aria-labelledby="attendee-heading">
         <h1 class="success-page__heading" id="attendee-heading">
-          Welcome, <span class="success-page__attendee-name">Attendee Name</span>
+          Welcome, <span class="success-page__attendee-name">{{ booking.attendee.first_name }} {{ booking.attendee.last_name }}</span>
         </h1>
-        <p class="success-page__reference">Ref: #NGC-0000</p>
+        <p class="success-page__reference">Ref: #{{ booking.booking_reference }}</p>
       </section>
 
       <section class="success-page__ticket" aria-label="Ticket details">
         <span class="success-page__ticket-icon" aria-hidden="true">▤</span>
         <div class="success-page__ticket-details">
           <p class="success-page__ticket-label">Ticket Type</p>
-          <p class="success-page__ticket-type">VIP Convention Pass</p>
+          <p class="success-page__ticket-type">{{ booking.ticket_type }}</p>
         </div>
       </section>
 
@@ -47,27 +47,39 @@
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td data-label="Time">10:00 AM</td>
-                <td data-label="Talk Title">Indie Game Dev in 2026</td>
-                <td data-label="Location">Main Stage</td>
-                <td data-label="Status"><span class="success-page__status success-page__status--checked-in">Checked In</span></td>
-              </tr>
-              <tr>
-                <td data-label="Time">02:30 PM</td>
-                <td data-label="Talk Title">Unreal Engine 5 Deep Dive</td>
-                <td data-label="Location">Room B12</td>
-                <td data-label="Status"><span class="success-page__status success-page__status--check-in">Check In</span></td>
-              </tr>
+              {% for reservation in booking.talk_reservations.all %}
+                <tr>
+                  <td data-label="Time">{{ reservation.talk.starts_at|date:"g:i A" }}</td>
+                  <td data-label="Talk Title">{{ reservation.talk.title }}</td>
+                  <td data-label="Location">{{ reservation.talk.location }}</td>
+                  <td data-label="Status">
+                    <span class="success-page__status{% if reservation.status == 'checked_in' %} success-page__status--checked-in{% else %} success-page__status--check-in{% endif %}">
+                      {{ reservation.get_status_display }}
+                    </span>
+                  </td>
+                </tr>
+              {% empty %}
+                <tr>
+                  <td colspan="4">No talks are associated with this booking.</td>
+                </tr>
+              {% endfor %}
             </tbody>
           </table>
         </div>
       </section>
 
       <div class="success-page__actions">
-        <a class="success-page__confirm-button" href="{% url 'pages:confirmation' %}" data-kiosk-enter>
-          Confirm Check-In <span aria-hidden="true">(Enter)</span>
-        </a>
+        {% if already_checked_in %}
+          <p role="status">This booking has already been checked in.</p>
+        {% else %}
+          <form method="post" action="{% url 'pages:confirmation' %}">
+            {% csrf_token %}
+            <input type="hidden" name="booking_id" value="{{ booking.pk }}">
+            <button class="success-page__confirm-button" type="submit" data-kiosk-enter>
+              Confirm Check-In <span aria-hidden="true">(Enter)</span>
+            </button>
+          </form>
+        {% endif %}
       </div>
     </main>
     <script src="{% static 'pages/kiosk.js' %}" defer></script>

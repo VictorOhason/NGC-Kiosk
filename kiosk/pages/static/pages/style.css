@@ -311,6 +311,33 @@ body {
   font-size: 0.875rem;
 }
 
+.checkin-page__matches {
+  align-items: stretch;
+  text-align: left;
+}
+
+.checkin-page__matches h2,
+.checkin-page__match-warning {
+  text-align: center;
+}
+
+.checkin-page__match-form {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.75rem 0;
+  border-top: 1px solid var(--color-border);
+}
+
+.checkin-page__match-details {
+  margin: 0;
+}
+
+.checkin-page__match-form .checkin-page__search-button {
+  flex: 0 0 auto;
+}
+
 .error-page__header {
   display: flex;
   justify-content: center;
@@ -713,6 +740,11 @@ body {
   .checkin-page__intro,
   .checkin-page__search-panel {
     padding: 1.5rem 1rem;
+  }
+
+  .checkin-page__match-form {
+    align-items: stretch;
+    flex-direction: column;
   }
 
   .error-page__main {

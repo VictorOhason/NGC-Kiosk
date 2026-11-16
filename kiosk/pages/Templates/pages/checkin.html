@@ -51,16 +51,14 @@
             </button>
           </div>
           <p
-            class="checkin-page__status{% if search_error or lookup_unavailable %} checkin-page__status--error{% endif %}"
+            class="checkin-page__status{% if search_error %} checkin-page__status--error{% endif %}"
             id="lookup-status"
             role="status"
             aria-live="polite"
-            {% if not search_error and not lookup_unavailable %}hidden{% endif %}
+            {% if not search_error %}hidden{% endif %}
           >
             {% if search_error %}
               {{ search_error }}
-            {% elif lookup_unavailable %}
-              Booking lookup is not connected yet. Please ask a convention staff member for help.
             {% endif %}
           </p>
           <p class="checkin-page__tip">
@@ -68,6 +66,28 @@
           </p>
         </form>
       </section>
+
+      {% if bookings %}
+        <section class="checkin-page__search-panel checkin-page__matches" aria-labelledby="matches-heading">
+          <h2 id="matches-heading">Select Your Booking</h2>
+          {% if too_many_matches %}
+            <p class="checkin-page__match-warning">More than 20 bookings matched. Please search using your booking reference or email address.</p>
+          {% endif %}
+          {% for booking in bookings %}
+            <form class="checkin-page__match-form" method="post" action="{% url 'pages:success' %}">
+              {% csrf_token %}
+              <input type="hidden" name="booking_id" value="{{ booking.pk }}">
+              <p class="checkin-page__match-details">
+                <strong>{{ booking.attendee.first_name }} {{ booking.attendee.last_name }}</strong>
+                — {{ booking.booking_reference }} — {{ booking.ticket_type }}
+              </p>
+              <button class="checkin-page__search-button" type="submit">
+                Review This Booking
+              </button>
+            </form>
+          {% endfor %}
+        </section>
+      {% endif %}
     </main>
 
     <footer class="checkin-page__footer">
